@@ -5,25 +5,25 @@ let discardedPresents = []; // Lista de presentes descartados
 // Lista de presentes com imagens
 let presents = [
   { name: "Turtle pillow", image: "https://i.imgur.com/IVL3UF4.png" },
-  { name: "Presente Misterioso", image: "https://i.imgur.com/hsz5BNp.png" },
+  { name: "Carregador Portátil", image: "https://i.imgur.com/ZyYJ4Dh.png" },
   { name: "Uber One", image: "https://i.imgur.com/0ipjNvh.png" },
   { name: "Perfume Dior", image: "https://i.imgur.com/xDfp2mE.png" },
   { name: "Pelúcia grande", image: "https://i.imgur.com/CDaWefX.png" },
   { name: "Whey Dux", image: "https://i.imgur.com/EATPwxa.png" },
   { name: "Calendário de cenário", image: "https://i.imgur.com/nwUJjhC.png" },
-  { name: "Fone Baseus", image: "https://i.imgur.com/aYFiQBa.png" },
+  { name: "Fone Baseus", image: "https://i.imgur.com/HXq2AAv.png" },
   { name: "Head Spa", image: "https://i.imgur.com/OBiiTNW.png" },
   { name: "Livro Meow", image: "https://i.imgur.com/GQbwtFm.png" },
-  { name: "Tênis", image: "https://i.imgur.com/G083rDw.png" },
+  { name: "Tênis (Aceite os termos)", image: "https://i.imgur.com/G083rDw.png" },
   { name: "Comer em restaurante", image: "https://i.imgur.com/xtIXbpv.png" },
-  { name: "G703 Sem fio", image: "https://i.imgur.com/IGjdS9V.png" },
+  { name: "G502 Sem fio", image: "https://i.imgur.com/KxWjrfA.png" },
   { name: "Capinha de celular", image: "https://i.imgur.com/EeRiM8M.png" },
   { name: "Skin de faca no Valorant", image: "https://i.imgur.com/7fd8EFj.png" },
-  { name: "Galaxy Fit3", image: "https://i.imgur.com/PxeRCUU.png" },
-  { name: "Giraffas pra comer Kley", image: "https://i.imgur.com/lojw4oJ.png" },
+  { name: "Abraço", image: "https://media.tenor.com/-uqrnytctDoAAAAj/bear-hug.gif" },
+  { name: "Giraffas pra comer o Kley", image: "https://i.imgur.com/lojw4oJ.png" },
   { name: "Cineminha com tudo pago", image: "https://i.imgur.com/hRyT17g.png" },
-  { name: "Test", image: "https://via.placeholder.com/100?text=Test" },
-  { name: "Test", image: "https://via.placeholder.com/100?text=Test" },
+  { name: "Vale presente R$ 150", image: "https://i.imgur.com/RDNpxC9.png" },
+  { name: "Dinossauro 3d (puzzle)", image: "https://i.imgur.com/Oh1mLYV.png" },
 ];
 
 // Função para embaralhar uma lista (Fisher-Yates shuffle)
@@ -98,7 +98,6 @@ function discardPresent(boxNumber) {
 
   // Atualizar o valor do dinheiro
   money -= 25;
-  money = Math.max(money, 0);
   document.getElementById("money").innerText = `R$ ${money}`;
 
   updateAvailablePresents(); // Atualiza a lista de disponíveis
