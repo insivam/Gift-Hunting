@@ -58,7 +58,7 @@ function revealPresent(boxNumber) {
 
   // Check if the user has already revealed 3 presents
   if (revealCount >= maxReveals) {
-    alert("Você já revelou 3 presentes. Descarte um antes de revelar outro.");
+    showPopup("Você já revelou 3 presentes. Descarte um antes de revelar outro.");
     return;
   }
 
@@ -69,9 +69,9 @@ function revealPresent(boxNumber) {
     return; // Do nothing if already revealed or discarded
   }
 
-   // Check if "G502 Sem fio" is still revealed
-   if (selectedPresents.includes("G502 Sem fio")) {
-    alert("Você não pode revelar outro presente enquanto o G502 Sem fio estiver ativo.");
+  // Check if "G502 Sem fio" is still revealed
+  if (selectedPresents.includes("G502 Sem fio")) {
+    showPopup("Você não pode revelar outro presente enquanto o G502 Sem fio estiver ativo.");
     return;
   }
 
@@ -125,8 +125,17 @@ function discardPresent(boxNumber) {
   }
 
   // Decrement revealCount because the present was discarded
-  revealCount--; 
+  revealCount--;
   updateAvailablePresents();
+}
+
+function showPopup(message) {
+  document.getElementById("popup-message").innerText = message; // Define a mensagem do pop-up
+  document.getElementById("popup").style.display = "block"; // Exibe o pop-up
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none"; // Oculta o pop-up
 }
 
 document.addEventListener("DOMContentLoaded", updateAvailablePresents);

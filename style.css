@@ -1,143 +1,181 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
 body {
-    background-color: #f4f9f7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  background-color: #f4f9f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .container {
-    text-align: center;
+  text-align: center;
 }
 
 h1 {
-    margin-bottom: 20px;
-    color: #333;
+  margin-bottom: 20px;
+  color: #333;
 }
 
 .grid {
-    display: grid;
-    grid-template-columns: repeat(5, 18VW);
-    grid-gap: 20px;
-    justify-content: center;
-    margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: repeat(5, 18vw);
+  grid-gap: 20px;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .box {
-    background-color: #4CAF50;
-    color: white;
-    font-size: 48px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 18VW;
-    height: 150px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    position: relative;
-    border-radius: 10px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 18vw;
+  height: 150px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: relative;
+  border-radius: 10px;
 }
 
 .box:hover {
-    background-color: #45a049;
+  background-color: #45a049;
 }
 
 .box.revealed {
-    background: url("https://i.imgur.com/CxC4EvR.png");
-    cursor: default;
-    
+  background: url("https://i.imgur.com/CxC4EvR.png");
+  cursor: default;
 }
 
 .box.discarded {
-    background-color: #ccc;
-    cursor: default;
+  background-color: #ccc;
+  cursor: default;
 }
 
 .box img {
-    position: absolute;
-    top: 0;
-    max-width: 90%;
-    height: 80%;
-    padding-top: 10px;
+  position: absolute;
+  top: 0;
+  max-width: 90%;
+  height: 80%;
+  padding-top: 10px;
 }
 
 .box.discarded img {
-    filter:grayscale(1)
+  filter: grayscale(1);
 }
 
 .box p {
-    position: absolute;
-    bottom: 0;
-    font-size: 15px;
-    font-weight: 700;
-    color: #333;
+  position: absolute;
+  bottom: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
 }
 
 .money-display {
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: end;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: end;
 }
 
 button.discard-button {
-    position: absolute;
-    right: 0;
-    top: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 
-    padding: 5px 10px;
-    font-size: 16px;
-    background-color: #ff0055;
-    color: whitesmoke;
-    border: none;
-    cursor: pointer;
-    border-radius: 0 10px;
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: #ff0055;
+  color: whitesmoke;
+  border: none;
+  cursor: pointer;
+  border-radius: 0 10px;
 }
 
 button.reveal-button {
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    cursor: pointer;
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 button.reveal-button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .scrolling-text {
-    white-space: nowrap;
-    overflow: hidden;
-    width: 100%;
-    margin-bottom: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 30px;
 }
 
 .scrolling-text p {
-    display: inline-block;
-    position: fixed;
-    animation: scrolling 30s linear infinite;
-    font-size: 20px;
-    letter-spacing: 3px;
-    word-spacing: 10px;
-    padding-right: 50vw;
-    padding-left: 50vw;
+  display: inline-block;
+  position: fixed;
+  animation: scrolling 30s linear infinite;
+  font-size: 20px;
+  letter-spacing: 3px;
+  word-spacing: 10px;
+  padding-right: 50vw;
+  padding-left: 50vw;
 }
 
 @keyframes scrolling {
-    0% {
+  0% {
     transform: translate(0, 0);
-    }
-    100% {
+  }
+  100% {
     transform: translate(-100%, 0);
-    }
+  }
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.close {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #ff0055;
+  text-decoration: none;
+  cursor: pointer;
 }
