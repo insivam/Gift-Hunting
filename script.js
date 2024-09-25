@@ -1,8 +1,10 @@
 let money = 200;
 let selectedPresents = [];
-let discardedPresents = []; // Lista de presentes descartados
+let discardedPresents = [];
+let revealCount = 0;
+const maxReveals = 3;
+const debugMode = new URLSearchParams(window.location.search).get("Debug") === "True";
 
-// Lista de presentes com imagens
 let presents = [
   { name: "Turtle pillow", image: "https://i.imgur.com/IVL3UF4.png" },
   { name: "Carregador Portátil", image: "https://i.imgur.com/ZyYJ4Dh.png" },
@@ -26,27 +28,21 @@ let presents = [
   { name: "Dinossauro 3d (puzzle)", image: "https://i.imgur.com/Oh1mLYV.png" },
 ];
 
-// Função para embaralhar uma lista (Fisher-Yates shuffle)
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]]; // Troca os elementos
+    [array[i], array[j]] = [array[j], array[i]];
   }
 }
 
-// Embaralha a lista de presentes
 shuffle(presents);
 
-// Gera uma lista de números aleatórios para as caixas (de 1 a 12)
 let boxNumbers = Array.from({ length: 20 }, (_, i) => i + 1);
 shuffle(boxNumbers);
 
-// Atualiza o texto de presentes disponíveis
 function updateAvailablePresents() {
   const availablePresents = presents.filter(
-    (present) =>
-      // !selectedPresents.includes(present.name) &&
-      !discardedPresents.includes(present.name) // Não mostra presentes descartados
+    (present) => !discardedPresents.includes(present.name)
   );
   document.getElementById("available-presents").innerText = `${availablePresents
     .map((p) => p.name)
@@ -54,54 +50,83 @@ function updateAvailablePresents() {
 }
 
 function revealPresent(boxNumber) {
-  const box = document.querySelector(`.box:nth-child(${boxNumber})`);
-
-  if (
-    box.classList.contains("revealed") ||
-    box.classList.contains("discarded")
-  ) {
+  // Check if debug mode is active
+  if (debugMode) {
+    performReveal(boxNumber);
     return;
   }
 
-  // A posição real do presente é obtida pelo número da caixa aleatória
-  const presentIndex = boxNumbers[boxNumber - 1] - 1; // Mapeia o número da caixa para o índice do presente
-  const present = presents[presentIndex]; // Pega o presente correspondente
+  // Check if the user has already revealed 3 presents
+  if (revealCount >= maxReveals) {
+    alert("Você já revelou 3 presentes. Descarte um antes de revelar outro.");
+    return;
+  }
 
-  // Exibir a imagem e o nome do presente
+  const box = document.querySelector(`.box:nth-child(${boxNumber})`);
+
+  // Check if the box is already revealed or discarded
+  if (box.classList.contains("revealed") || box.classList.contains("discarded")) {
+    return; // Do nothing if already revealed or discarded
+  }
+
+   // Check if "G502 Sem fio" is still revealed
+   if (selectedPresents.includes("G502 Sem fio")) {
+    alert("Você não pode revelar outro presente enquanto o G502 Sem fio estiver ativo.");
+    return;
+  }
+
+  // Perform the reveal if all conditions are satisfied
+  performReveal(boxNumber);
+}
+
+function performReveal(boxNumber) {
+  const box = document.querySelector(`.box:nth-child(${boxNumber})`);
+  const presentIndex = boxNumbers[boxNumber - 1] - 1;
+  const present = presents[presentIndex];
+
+  // Update box content and classes
   box.innerHTML = `<img src="${present.image}" alt="${present.name}"><p>${present.name}</p><button class="discard-button" onclick="discardPresent(${boxNumber})">X</button>`;
   box.classList.add("revealed");
 
   selectedPresents.push(present.name);
-  updateAvailablePresents(); // Atualiza a lista de disponíveis
+  revealCount++;
+  updateAvailablePresents();
 }
 
 function discardPresent(boxNumber) {
   const box = document.querySelector(`.box:nth-child(${boxNumber})`);
+
+  // Only proceed if the box is revealed
   if (!box.classList.contains("revealed")) {
     return;
   }
 
-  // A posição real do presente é obtida pelo número da caixa aleatória
   const presentIndex = boxNumbers[boxNumber - 1] - 1;
   const present = presents[presentIndex];
 
-  // Remove o presente de selectedPresents e adiciona a discardedPresents
+  // Remove from selected presents
   const presentNameIndex = selectedPresents.indexOf(present.name);
   if (presentNameIndex !== -1) {
     selectedPresents.splice(presentNameIndex, 1);
   }
-  discardedPresents.push(present.name); // Adiciona à lista de descartados
 
+  // Add to discarded presents
+  discardedPresents.push(present.name);
+
+  // Update box classes
   box.classList.add("discarded");
   box.classList.remove("revealed");
-  box.querySelector("button").remove(); // Remove o botão "X"
+  box.querySelector("button").remove();
 
-  // Atualizar o valor do dinheiro
-  money -= 25;
-  document.getElementById("money").innerText = `R$ ${money}`;
+  // Deduct money only if not "G502 Sem fio"
+  if (present.name !== "G502 Sem fio") {
+    money -= 25;
+    document.getElementById("money").innerText = `R$ ${money}`;
+  }
 
-  updateAvailablePresents(); // Atualiza a lista de disponíveis
+  // Decrement revealCount because the present was discarded
+  revealCount--; 
+  updateAvailablePresents();
 }
 
-// Inicializa a lista de presentes disponíveis ao carregar a página
 document.addEventListener("DOMContentLoaded", updateAvailablePresents);
